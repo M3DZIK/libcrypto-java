@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AesCbcTests {
     @Test
-    void encrypt_decrypt() {
+    void encrypt_decrypt() throws EncryptException {
         String secretKey = new Pbkdf2(1000).sha256("secret passphrase", "salt".getBytes());
 
         String input = "Hello World!";
@@ -17,7 +17,7 @@ public class AesCbcTests {
     }
 
     @Test
-    void decrypt() {
+    void decrypt() throws EncryptException {
         String secretKey = new Pbkdf2(1000).sha256("secret passphrase", "salt".getBytes());
 
         String cipherText = "ae77d812f4494a766a94b5dff8e7aa3c8408544b9fd30cd13b886cc5dd1b190e";

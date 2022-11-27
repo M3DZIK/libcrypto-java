@@ -1,17 +1,10 @@
 package dev.medzik.libcrypto;
 
-import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 public class AesCbc {
     private static final String ALGORITHM = "AES";
@@ -21,9 +14,9 @@ public class AesCbc {
      * @param clearText The clear text to encrypt.
      * @param key The key to use for encryption. (must be 256-bit/32-byte)
      * @return The cipher text as hex string.
-     * @throws RuntimeException If the encryption fails.
+     * @throws EncryptException If the encryption fails.
      */
-    public static String encrypt(String clearText, String key) throws RuntimeException {
+    public static String encrypt(String clearText, String key) throws EncryptException {
         try {
             byte[] keyByte = Hex.decodeHex(key);
 
@@ -42,10 +35,8 @@ public class AesCbc {
             byte[] cipherBytes = cipher.doFinal(clearText.getBytes());
 
             return Hex.encodeHexString(iv) + Hex.encodeHexString(cipherBytes);
-        } catch (DecoderException
-                 | InvalidAlgorithmParameterException | NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException
-                 | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new EncryptException(e);
         }
     }
 
@@ -54,9 +45,9 @@ public class AesCbc {
      * @param key The key to use for decryption. (must be 256-bit/32-byte)
      * @param cipherText The cipher text to decrypt.
      * @return The clear text.
-     * @throws RuntimeException If the decryption fails.
+     * @throws EncryptException If the decryption fails.
      */
-    public static String decrypt(String cipherText, String key) throws RuntimeException {
+    public static String decrypt(String cipherText, String key) throws EncryptException {
         try {
             byte[] keyByte = Hex.decodeHex(key);
 
@@ -77,10 +68,8 @@ public class AesCbc {
             byte[] clearBytes = cipher.doFinal(cipherBytes);
 
             return new String(clearBytes);
-        } catch (DecoderException
-                 | InvalidAlgorithmParameterException | NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException
-                 | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new EncryptException(e);
         }
     }
 }

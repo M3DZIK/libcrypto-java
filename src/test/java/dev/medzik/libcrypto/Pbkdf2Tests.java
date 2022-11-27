@@ -9,7 +9,7 @@ public class Pbkdf2Tests {
     byte[] salt = "salt".getBytes();
 
     @Test
-    void sha256() {
+    void sha256() throws EncryptException {
         Pbkdf2 hasher = new Pbkdf2(1000);
         String hash = hasher.sha256(password, salt);
 
@@ -17,7 +17,7 @@ public class Pbkdf2Tests {
     }
 
     @Test
-    void sha512() {
+    void sha512() throws EncryptException {
         Pbkdf2 hasher = new Pbkdf2(1000);
         String hash = hasher.sha512(password, salt);
 
