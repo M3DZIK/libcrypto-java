@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.medzik.libcrypto</groupId>
+    <groupId>dev.medzik</groupId>
     <artifactId>libcrypto</artifactId>
     <version>0.1.0</version>
     <description>Cryptography Utils for Java</description>
@@ -100,4 +100,12 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub MedzikUser Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/MedzikUser/libcrypto-java</url>
+        </repository>
+    </distributionManagement>
 </project>
