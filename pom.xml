@@ -6,8 +6,28 @@
 
     <groupId>dev.medzik.libcrypto</groupId>
     <artifactId>libcrypto</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <description>Cryptography Utils for Java</description>
+    <url>https://github.com/MedzikUser/libcrypto-java</url>
+
+    <developers>
+        <developer>
+            <name>MedzikUser</name>
+            <email>medzik@duck.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/MedzikUser/libcrypto-java</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>https://github.com/MedzikUser/libcrypto-java/blob/main/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <dependencies>
         <dependency>
@@ -34,6 +54,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -43,6 +64,33 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
