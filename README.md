@@ -1,8 +1,8 @@
-A cryptography utilities for Java.
+A cryptography utilities for Java
 
-# Installation
+## Installation
 
-## Maven
+### Maven
 
 **Step 1.** Add the JitPack repository to your build file
 
@@ -25,7 +25,7 @@ A cryptography utilities for Java.
 </dependency>
 ```
 
-## Gradle
+### Gradle
 
 **Step 1.** Add the JitPack repository to your build file
 
