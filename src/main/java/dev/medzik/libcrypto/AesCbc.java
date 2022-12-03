@@ -6,6 +6,9 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * AES CBC encryption/decryption with PKCS5 padding and hex encoding.
+ */
 public class AesCbc {
     private static final String ALGORITHM = "AES";
 
@@ -49,9 +52,9 @@ public class AesCbc {
      */
     public static String decrypt(String cipherText, String key) throws EncryptException {
         try {
-            byte[] keyByte = Hex.decodeHex(key);
+            byte[] keyBytes = Hex.decodeHex(key);
 
-            if (keyByte.length != 32) {
+            if (keyBytes.length != 32) {
                 throw new IllegalArgumentException("Secret key must be 32 bytes long");
             }
 
@@ -59,7 +62,7 @@ public class AesCbc {
 
             byte[] cipherBytes = Hex.decodeHex(cipherText.substring(32));
 
-            SecretKeySpec secretKey = new SecretKeySpec(keyByte, ALGORITHM);
+            SecretKeySpec secretKey = new SecretKeySpec(keyBytes, ALGORITHM);
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
