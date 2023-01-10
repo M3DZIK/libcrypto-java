@@ -8,7 +8,7 @@ public class Salt {
      * @param length The length of the salt slice.
      * @return Salt slice in byte[].
      */
-    public byte[] generate(int length) {
+    public static byte[] generate(int length) {
         Random rd = new Random();
         byte[] salt = new byte[length];
         rd.nextBytes(salt);
