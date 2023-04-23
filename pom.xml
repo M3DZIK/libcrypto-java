@@ -30,7 +30,7 @@
 
     <licenses>
         <license>
-            <name>GNU General Public License v3.0</name>
+            <name>MIT</name>
             <url>https://github.com/M3DZIK/libcrypto-java/blob/main/LICENSE</url>
             <distribution>repo</distribution>
         </license>
@@ -42,6 +42,7 @@
             <artifactId>commons-codec</artifactId>
             <version>1.15</version>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
