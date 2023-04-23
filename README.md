@@ -8,7 +8,7 @@ A cryptography utilities for Java
 <dependency>
     <groupId>dev.medzik</groupId>
     <artifactId>libcrypto</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
 </dependency>
 ```
 
@@ -18,7 +18,7 @@ A cryptography utilities for Java
 
 ```groovy
 dependencies {
-    implementation 'dev.medzik:libcrypto:0.1.2'
+    implementation 'dev.medzik:libcrypto:0.1.3'
 }
 ```
 
@@ -26,6 +26,6 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("dev.medzik:libcrypto:0.1.2")
+    implementation("dev.medzik:libcrypto:0.1.3")
 }
 ```
