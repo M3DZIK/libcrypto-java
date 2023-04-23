@@ -6,9 +6,13 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+/**
+ * PBKDF2-SHA256/512 hashing.
+ * <a href="https://en.wikipedia.org/wiki/PBKDF2">See PBKDF2 on Wikipedia</a>
+ */
 public class Pbkdf2 {
     /**
-     * Number of the password iterations.
+     * Number of iterations for the hashing.
      */
     int iterations;
 

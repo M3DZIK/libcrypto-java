@@ -21,22 +21,27 @@ public class AesCbc {
      */
     public static String encrypt(String clearText, String key) throws EncryptException {
         try {
+            // covert key to byte array
             byte[] keyByte = Hex.decodeHex(key);
 
             if (keyByte.length != 32) {
                 throw new IllegalArgumentException("Secret key must be 32 bytes long");
             }
 
-            byte[] iv = new Salt().generate(16);
+            // generate random IV
+            byte[] iv = Salt.generate(16);
 
             SecretKeySpec secretKey = new SecretKeySpec(keyByte, ALGORITHM);
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
 
+            // initialize cipher
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
 
+            // encrypt
             byte[] cipherBytes = cipher.doFinal(clearText.getBytes());
 
+            // return IV + cipher text as hex string
             return Hex.encodeHexString(iv) + Hex.encodeHexString(cipherBytes);
         } catch (Exception e) {
             throw new EncryptException(e);
@@ -52,24 +57,28 @@ public class AesCbc {
      */
     public static String decrypt(String cipherText, String key) throws EncryptException {
         try {
+            // covert key to byte array
             byte[] keyBytes = Hex.decodeHex(key);
 
             if (keyBytes.length != 32) {
                 throw new IllegalArgumentException("Secret key must be 32 bytes long");
             }
 
+            // extract IV and cipher text
             byte[] iv = Hex.decodeHex(cipherText.substring(0, 32));
-
             byte[] cipherBytes = Hex.decodeHex(cipherText.substring(32));
 
             SecretKeySpec secretKey = new SecretKeySpec(keyBytes, ALGORITHM);
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
 
+            // initialize cipher
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
 
+            // decrypt
             byte[] clearBytes = cipher.doFinal(cipherBytes);
 
+            // return clear text as string
             return new String(clearBytes);
         } catch (Exception e) {
             throw new EncryptException(e);

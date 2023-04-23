@@ -14,8 +14,18 @@ A cryptography utilities for Java
 
 ### Gradle
 
+### Groovy
+
 ```groovy
 dependencies {
     implementation 'dev.medzik:libcrypto:0.1.2'
+}
+```
+
+### Kotlin
+
+```kotlin
+dependencies {
+    implementation("dev.medzik:libcrypto:0.1.2")
 }
 ```
