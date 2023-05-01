@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>LibCrypto is a set of cryptography utilities</name>
     <groupId>dev.medzik</groupId>
-    <name>libcrypto</name>
     <artifactId>libcrypto</artifactId>
-    <version>0.1.3</version>
+    <version>0.2.0</version>
     <description>Cryptography Utils for Java</description>
     <url>https://github.com/MedzikUser/libcrypto-java</url>
 
@@ -23,8 +23,8 @@
     </scm>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
