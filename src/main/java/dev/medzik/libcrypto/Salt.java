@@ -1,6 +1,6 @@
 package dev.medzik.libcrypto;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class Salt {
     /**
@@ -9,7 +9,7 @@ public class Salt {
      * @return Salt slice in byte[].
      */
     public static byte[] generate(int length) {
-        Random rd = new Random();
+        SecureRandom rd = new SecureRandom();
         byte[] salt = new byte[length];
         rd.nextBytes(salt);
         return salt;
