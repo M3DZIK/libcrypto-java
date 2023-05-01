@@ -31,10 +31,10 @@ public class Argon2id {
 
     /**
      * Creates a new Argon2id instance.
-     * @param hashLength the length of the hash in bytes
-     * @param parallelism the number of parallel threads to use when hashing
-     * @param memory the amount of memory to use when hashing, in KiB
-     * @param iterations the number of iterations to use when hashing
+     * @param hashLength The length of the hash in bytes
+     * @param parallelism The number of parallel threads to use when hashing
+     * @param memory The amount of memory to use when hashing, in KiB
+     * @param iterations The number of iterations to use when hashing
      */
     public Argon2id(int hashLength, int parallelism, int memory, int iterations) {
         this.hashLength = hashLength;
@@ -45,9 +45,9 @@ public class Argon2id {
 
     /**
      * Hashes a password using Argon2id.
-     * @param password the password to hash
-     * @param salt the salt to use
-     * @return the hashed password
+     * @param password The password to hash
+     * @param salt The salt to use
+     * @return The hashed password
      */
     public String hash(String password, byte[] salt) {
         Argon2Parameters.Builder builder = new Argon2Parameters.Builder(Argon2Parameters.ARGON2_id)
@@ -66,10 +66,10 @@ public class Argon2id {
 
     /**
      * Verifies a password against a hash.
-     * @param rawPassword the raw password to verify
-     * @param encodedPassword the encoded password to verify against
-     * @return true if the passwords match, false otherwise
-     * @throws IOException if the password hash is malformed
+     * @param rawPassword The raw password to verify
+     * @param encodedPassword The encoded password to verify against
+     * @return True if the passwords match, false otherwise
+     * @throws IOException If the password hash is malformed
      */
     public static boolean verify(CharSequence rawPassword, String encodedPassword) throws IOException {
         if (encodedPassword == null) {
@@ -92,8 +92,8 @@ public class Argon2id {
 
     /**
      * Convert hash to hex string. Useful for AES encryption.
-     * @param hash the hash to convert
-     * @return the hex string
+     * @param hash The hash to convert
+     * @return The hex string
      */
     public static String toHexHash(String hash) {
         Argon2EncodingUtils.Argon2Hash decoded = Argon2EncodingUtils.decode(hash);
