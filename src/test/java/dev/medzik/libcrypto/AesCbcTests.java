@@ -28,9 +28,9 @@ public class AesCbcTests {
 
     @Test
     void argon2Encrypt() throws EncryptException {
-        Argon2id argon2 = new Argon2id(256 / 8, 1, 65536, 1);
-        String hash = argon2.hash("secret password", Salt.generate(16));
-        String secretKey = Argon2id.toHexHash(hash);
+        Argon2HashingFunction argon2 = new Argon2HashingFunction(256 / 8, 1, 65536, 1);
+        Argon2Hash hash = argon2.hash("secret password", Salt.generate(16));
+        String secretKey = hash.toHexHash();
 
         String input = "Hello World!";
         String cipherText =  AesCbc.encrypt(input, secretKey);

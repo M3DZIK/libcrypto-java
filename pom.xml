@@ -45,9 +45,9 @@
 
         <!-- Argon2 algorithm implementation -->
         <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk18on</artifactId>
-            <version>1.73</version>
+            <groupId>com.password4j</groupId>
+            <artifactId>password4j</artifactId>
+            <version>1.7.0</version>
         </dependency>
 
         <dependency>

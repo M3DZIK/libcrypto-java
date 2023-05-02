@@ -1,13 +1,11 @@
 package dev.medzik.libcrypto;
 
-import org.bouncycastle.crypto.params.Argon2Parameters;
-import org.bouncycastle.util.Arrays;
+import com.password4j.types.Argon2;
 
 import java.util.Base64;
 
 public class Argon2EncodingUtils {
     private static final Base64.Encoder b64encoder = Base64.getEncoder().withoutPadding();
-
     private static final Base64.Decoder b64decoder = Base64.getDecoder();
 
     /**
@@ -17,31 +15,29 @@ public class Argon2EncodingUtils {
      * @return Argon2 encoded hash
      * @throws IllegalArgumentException If the parameters contain invalid values
      */
-    public static String encode(byte[] hash, Argon2Parameters parameters) throws IllegalArgumentException {
+    public static String encode(Argon2Hash hash) throws IllegalArgumentException {
         StringBuilder stringBuilder = new StringBuilder();
 
-        switch (parameters.getType()) {
-            case Argon2Parameters.ARGON2_d:
+        switch (hash.getType()) {
+            case D:
                 stringBuilder.append("$argon2d");
                 break;
-            case Argon2Parameters.ARGON2_i:
+            case I:
                 stringBuilder.append("$argon2i");
                 break;
-            case Argon2Parameters.ARGON2_id:
+            case ID:
                 stringBuilder.append("$argon2id");
                 break;
-            default:
-                throw new IllegalArgumentException("Invalid algorithm type: " + parameters.getType());
         }
 
-        stringBuilder.append("$v=").append(parameters.getVersion()).append("$m=").append(parameters.getMemory())
-                .append(",t=").append(parameters.getIterations()).append(",p=").append(parameters.getLanes());
+        stringBuilder.append("$v=").append(hash.getVersion()).append("$m=").append(hash.getMemory())
+                .append(",t=").append(hash.getIterations()).append(",p=").append(hash.getParallelism());
 
-        if (parameters.getSalt() != null) {
-            stringBuilder.append("$").append(b64encoder.encodeToString(parameters.getSalt()));
+        if (hash.getSalt() != null) {
+            stringBuilder.append("$").append(b64encoder.encodeToString(hash.getSalt()));
         }
 
-        stringBuilder.append("$").append(b64encoder.encodeToString(hash));
+        stringBuilder.append("$").append(b64encoder.encodeToString(hash.getHash()));
         return stringBuilder.toString();
     }
 
@@ -52,30 +48,33 @@ public class Argon2EncodingUtils {
      * @throws IllegalArgumentException If the encoded hash is invalid
      */
     public static Argon2Hash decode(String encodedHash) throws IllegalArgumentException {
-        Argon2Parameters.Builder paramsBuilder;
         String[] parts = encodedHash.split("\\$");
         if (parts.length < 4) {
             throw new IllegalArgumentException("Invalid encoded Argon2-hash");
         }
 
         int currentPart = 1;
+        Argon2 type;
         switch (parts[currentPart++]) {
             case "argon2d":
-                paramsBuilder = new Argon2Parameters.Builder(Argon2Parameters.ARGON2_d);
+                type = Argon2.D;
                 break;
             case "argon2i":
-                paramsBuilder = new Argon2Parameters.Builder(Argon2Parameters.ARGON2_i);
+                type = Argon2.I;
                 break;
             case "argon2id":
-                paramsBuilder = new Argon2Parameters.Builder(Argon2Parameters.ARGON2_id);
+                type = Argon2.ID;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid algorithm type: " + parts[0]);
         }
 
+        int version;
         if (parts[currentPart].startsWith("v=")) {
-            paramsBuilder.withVersion(Integer.parseInt(parts[currentPart].substring(2)));
+            version = Integer.parseInt(parts[currentPart].substring(2));
             currentPart++;
+        } else {
+            throw new IllegalArgumentException("Invalid version parameter");
         }
 
         String[] performanceParams = parts[currentPart++].split(",");
@@ -88,59 +87,20 @@ public class Argon2EncodingUtils {
             throw new IllegalArgumentException("Invalid memory parameter");
         }
 
-        paramsBuilder.withMemoryAsKB(Integer.parseInt(performanceParams[0].substring(2)));
+        int memory = Integer.parseInt(performanceParams[0].substring(2));
         if (!performanceParams[1].startsWith("t=")) {
             throw new IllegalArgumentException("Invalid iterations parameter");
         }
 
-        paramsBuilder.withIterations(Integer.parseInt(performanceParams[1].substring(2)));
+        int iterations = Integer.parseInt(performanceParams[1].substring(2));
         if (!performanceParams[2].startsWith("p=")) {
             throw new IllegalArgumentException("Invalid parallelity parameter");
         }
 
-        paramsBuilder.withParallelism(Integer.parseInt(performanceParams[2].substring(2)));
-        paramsBuilder.withSalt(b64decoder.decode(parts[currentPart++]));
-        return new Argon2Hash(b64decoder.decode(parts[currentPart]), paramsBuilder.build());
-    }
+        int parallelism = Integer.parseInt(performanceParams[2].substring(2));
+        byte[] salt = b64decoder.decode(parts[currentPart++]);
+        byte[] hash = b64decoder.decode(parts[currentPart]);
 
-    /**
-     * Represents an Argon2 hash with its parameters.
-     */
-    public static class Argon2Hash {
-        /**
-         * The hash.
-         */
-        private byte[] hash;
-
-        /**
-         * Parameters used to hash the password.
-         */
-        private Argon2Parameters parameters;
-
-        /**
-         * Creates a new Argon2 hash with the given hash and parameters.
-         * @param hash The hash
-         * @param parameters The parameters
-         */
-        Argon2Hash(byte[] hash, Argon2Parameters parameters) {
-            this.hash = Arrays.clone(hash);
-            this.parameters = parameters;
-        }
-
-        /**
-         * Returns the hash. The returned array is a copy of the original hash.
-         * @return The hash
-         */
-        public byte[] getHash() {
-            return Arrays.clone(this.hash);
-        }
-
-        /**
-         * Returns the parameters.
-         * @return The parameters
-         */
-        public Argon2Parameters getParameters() {
-            return this.parameters;
-        }
+        return new Argon2Hash(type, version, memory, iterations, parallelism, salt, hash);
     }
 }
