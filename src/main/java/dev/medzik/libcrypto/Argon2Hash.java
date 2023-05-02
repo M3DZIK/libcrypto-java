@@ -1,19 +1,39 @@
 package dev.medzik.libcrypto;
 
 import com.password4j.types.Argon2;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
 /**
  * Represents an Argon2 hash with its parameters.
  */
 public class Argon2Hash {
+    /**
+     * The Argon2 type of this hash. (Argon2d, Argon2i, Argon2id)
+     */
     private final Argon2 type;
+    /**
+     * The version of this hash.
+     */
     private final int version;
+    /**
+     * The memory parameter of this hash.
+     */
     private final int memory;
+    /**
+     * The iterations parameter of this hash.
+     */
     private final int iterations;
+    /**
+     * The parallelism parameter of this hash.
+     */
     private final int parallelism;
+    /**
+     * The salt of this hash.
+     */
     private final byte[] salt;
+    /**
+     * The hash.
+     */
     private final byte[] hash;
 
     /**

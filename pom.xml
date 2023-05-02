@@ -7,7 +7,7 @@
     <name>LibCrypto is a set of cryptography utilities</name>
     <groupId>dev.medzik</groupId>
     <artifactId>libcrypto</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
     <description>Cryptography Utils for Java</description>
     <url>https://github.com/MedzikUser/libcrypto-java</url>
 

@@ -4,6 +4,9 @@ import com.password4j.types.Argon2;
 
 import java.util.Base64;
 
+/**
+ * Utility class for encoding and decoding Argon2 hashes.
+ */
 public class Argon2EncodingUtils {
     private static final Base64.Encoder b64encoder = Base64.getEncoder().withoutPadding();
     private static final Base64.Decoder b64decoder = Base64.getDecoder();
@@ -11,7 +14,6 @@ public class Argon2EncodingUtils {
     /**
      * Encodes the given hash and parameters to a string.
      * @param hash The hash to encode
-     * @param parameters The parameters to encode
      * @return Argon2 encoded hash
      * @throws IllegalArgumentException If the parameters contain invalid values
      */
@@ -43,7 +45,7 @@ public class Argon2EncodingUtils {
 
     /**
      * Decodes the given Argon2 encoded hash to a {@link Argon2Hash} object.
-     * @param encodedHash The encoded hash
+     * @param encodedHash The encoded argon2 hash
      * @return The decoded hash
      * @throws IllegalArgumentException If the encoded hash is invalid
      */

@@ -5,6 +5,9 @@ import com.password4j.Hash;
 import com.password4j.Password;
 import com.password4j.types.Argon2;
 
+/**
+ * A hashing function for Argon2.
+ */
 public class Argon2HashingFunction {
     /**
      * The length of the hash in bytes.
