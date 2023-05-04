@@ -4,7 +4,7 @@ A cryptography utilities for Java
 
 ### Installation
 
-#### Maven
+The library is available on Maven Central. To use it, add the following to your `pom.xml` file:
 
 ```xml
 <dependency>
@@ -12,24 +12,6 @@ A cryptography utilities for Java
     <artifactId>libcrypto</artifactId>
     <version>0.2.1</version>
 </dependency>
-```
-
-#### Gradle
-
-#### Groovy
-
-```groovy
-dependencies {
-    implementation 'dev.medzik:libcrypto:0.2.1'
-}
-```
-
-#### Kotlin
-
-```kotlin
-dependencies {
-    implementation("dev.medzik:libcrypto:0.2.1")
-}
 ```
 
 ### Usage
