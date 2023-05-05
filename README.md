@@ -31,3 +31,7 @@ Or use PBKDF2
 Encrypt data using AES CBC
 
 ![Screenshot with an example code of AES CBC](https://user-images.githubusercontent.com/87065584/236325358-8982b9c6-cea5-4cb6-a4e2-b81b4e51c163.png)
+
+Encrypt data using RSA
+
+![Screenshot with an example code of RSA](https://user-images.githubusercontent.com/87065584/236550078-562027d9-655b-47c8-8ae5-3f4e9c1067af.png)
