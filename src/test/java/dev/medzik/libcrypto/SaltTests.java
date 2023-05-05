@@ -9,7 +9,7 @@ public class SaltTests {
 
     @Test
     void getSalt() {
-        byte[] salt = new Salt().generate(length);
+        byte[] salt = Salt.generate(length);
 
         assertEquals(salt.length, length);
     }
