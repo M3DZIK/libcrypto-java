@@ -10,7 +10,7 @@ The library is available on Maven Central. To use it, add the following to your 
 <dependency>
     <groupId>dev.medzik</groupId>
     <artifactId>libcrypto</artifactId>
-    <version>0.2.1</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
