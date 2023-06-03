@@ -1,7 +1,5 @@
 package dev.medzik.libcrypto;
 
-import com.password4j.types.Argon2;
-
 import java.util.Base64;
 
 /**
