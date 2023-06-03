@@ -127,6 +127,14 @@ public class Argon2Hash {
      */
     @Override
     public String toString() {
+        return toArgon2String();
+    }
+
+    /**
+     * Returns the argon2 hash
+     * @return The argon2 hash
+     */
+    public String toArgon2String() {
         return Argon2EncodingUtils.encode(this);
     }
 }
