@@ -1,6 +1,5 @@
 package dev.medzik.libcrypto;
 
-import com.password4j.types.Argon2;
 import org.apache.commons.codec.binary.Hex;
 
 /**
@@ -10,7 +9,7 @@ public class Argon2Hash {
     /**
      * The Argon2 type of this hash. (Argon2d, Argon2i, Argon2id)
      */
-    private final Argon2 type;
+    private final Argon2Type type;
     /**
      * The version of this hash.
      */
@@ -40,7 +39,7 @@ public class Argon2Hash {
      * Creates a new Argon2 hash with the given hash and parameters.
      * @param hash The Hash object
      */
-    public Argon2Hash(Argon2 type, int version, int memory, int iterations, int parallelism, byte[] salt, byte[] hash) {
+    public Argon2Hash(Argon2Type type, int version, int memory, int iterations, int parallelism, byte[] salt, byte[] hash) {
         this.type = type;
         this.version = version;
         this.memory = memory;
@@ -54,7 +53,7 @@ public class Argon2Hash {
      * Returns the Argon2 type of this hash.
      * @return The Argon2 type
      */
-    public Argon2 getType() {
+    public Argon2Type getType() {
         return type;
     }
 

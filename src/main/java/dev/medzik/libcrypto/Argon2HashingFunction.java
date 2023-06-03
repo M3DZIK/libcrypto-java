@@ -3,7 +3,6 @@ package dev.medzik.libcrypto;
 import com.password4j.Argon2Function;
 import com.password4j.Hash;
 import com.password4j.Password;
-import com.password4j.types.Argon2;
 
 /**
  * A hashing function for Argon2.
@@ -32,7 +31,7 @@ public class Argon2HashingFunction {
     /**
      * The type of Argon2 to use.
      */
-    private final Argon2 type;
+    private final Argon2Type type;
     /**
      * The version of Argon2 to use.
      * Default is 19
@@ -51,7 +50,7 @@ public class Argon2HashingFunction {
      * @param memory The amount of memory to use when hashing, in KiB
      * @param iterations The number of iterations to use when hashing
      */
-    public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations, Argon2 type, int version) {
+    public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations, Argon2Type type, int version) {
         this.hashLength = hashLength;
         this.parallelism = parallelism;
         this.memory = memory;
@@ -72,7 +71,7 @@ public class Argon2HashingFunction {
         this.parallelism = parallelism;
         this.memory = memory;
         this.iterations = iterations;
-        this.type = Argon2.ID;
+        this.type = Argon2Type.ID;
         this.version = DEFAULT_VERSION;
     }
 
@@ -83,7 +82,7 @@ public class Argon2HashingFunction {
      * @return The hashed password
      */
     public Argon2Hash hash(String password, byte[] salt) {
-        Argon2Function instance = Argon2Function.getInstance(memory, iterations, parallelism, hashLength, type, version);
+        Argon2Function instance = Argon2Function.getInstance(memory, iterations, parallelism, hashLength, type.toPassword4jType(), version);
 
         Hash hash = Password
                 .hash(password)
@@ -102,7 +101,7 @@ public class Argon2HashingFunction {
     public static boolean verify(CharSequence rawPassword, String encodedPassword) {
         Argon2Hash argon2Hash = Argon2EncodingUtils.decode(encodedPassword);
 
-        Argon2Function instance = Argon2Function.getInstance(argon2Hash.getMemory(), argon2Hash.getIterations(), argon2Hash.getParallelism(), argon2Hash.getHashLength(), argon2Hash.getType(), argon2Hash.getVersion());
+        Argon2Function instance = Argon2Function.getInstance(argon2Hash.getMemory(), argon2Hash.getIterations(), argon2Hash.getParallelism(), argon2Hash.getHashLength(), argon2Hash.getType().toPassword4jType(), argon2Hash.getVersion());
 
         return Password
                 .check(rawPassword, encodedPassword)
