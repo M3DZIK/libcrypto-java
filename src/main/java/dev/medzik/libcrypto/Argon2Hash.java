@@ -3,8 +3,6 @@ package dev.medzik.libcrypto;
 import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.crypto.params.Argon2Parameters;
 
-import java.util.Objects;
-
 /**
  * Represents an Argon2 hash with its parameters.
  */
