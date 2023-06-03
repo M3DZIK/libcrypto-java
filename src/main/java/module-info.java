@@ -1,5 +1,9 @@
 module dev.medzik.libcrypto {
+    // Apache Commons Codec
     requires org.apache.commons.codec;
-    requires password4j;
+
+    // Bouncy Castle
+    requires org.bouncycastle.provider;
+
     exports dev.medzik.libcrypto;
 }

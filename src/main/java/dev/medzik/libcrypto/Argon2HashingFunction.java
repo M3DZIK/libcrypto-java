@@ -1,9 +1,9 @@
 package dev.medzik.libcrypto;
 
-import com.password4j.Argon2Function;
-import com.password4j.Hash;
-import com.password4j.Password;
-import com.password4j.types.Argon2;
+import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
+import org.bouncycastle.crypto.params.Argon2Parameters;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * A hashing function for Argon2.
@@ -32,7 +32,7 @@ public class Argon2HashingFunction {
     /**
      * The type of Argon2 to use.
      */
-    private final Argon2 type;
+    private final Argon2Type type;
     /**
      * The version of Argon2 to use.
      * Default is 19
@@ -51,7 +51,7 @@ public class Argon2HashingFunction {
      * @param memory The amount of memory to use when hashing, in KiB
      * @param iterations The number of iterations to use when hashing
      */
-    public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations, Argon2 type, int version) {
+    public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations, Argon2Type type, int version) {
         this.hashLength = hashLength;
         this.parallelism = parallelism;
         this.memory = memory;
@@ -72,7 +72,7 @@ public class Argon2HashingFunction {
         this.parallelism = parallelism;
         this.memory = memory;
         this.iterations = iterations;
-        this.type = Argon2.ID;
+        this.type = Argon2Type.ID;
         this.version = DEFAULT_VERSION;
     }
 
@@ -83,14 +83,27 @@ public class Argon2HashingFunction {
      * @return The hashed password
      */
     public Argon2Hash hash(String password, byte[] salt) {
-        Argon2Function instance = Argon2Function.getInstance(memory, iterations, parallelism, hashLength, type, version);
+        // create the parameters for the hash
+        Argon2Parameters.Builder builder = new Argon2Parameters.Builder(type.ordinal())
+                .withVersion(version)
+                .withParallelism(parallelism)
+                .withMemoryAsKB(memory)
+                .withIterations(iterations)
+                .withSalt(salt);
+        Argon2Parameters parameters = builder.build();
 
-        Hash hash = Password
-                .hash(password)
-                .addSalt(salt)
-                .with(instance);
+        // create a new instance of the hashing function
+        Argon2BytesGenerator generator = new Argon2BytesGenerator();
+        generator.init(parameters);
 
-        return Argon2EncodingUtils.decode(hash.getResult());
+        // initialize the hash array
+        byte[] hash = new byte[hashLength];
+
+        // hash the password
+        generator.generateBytes(password.getBytes(StandardCharsets.UTF_8), hash);
+
+        // return the hash and parameters
+        return new Argon2Hash(hash, parameters);
     }
 
     /**
@@ -100,12 +113,23 @@ public class Argon2HashingFunction {
      * @return True if the passwords match, false otherwise
      */
     public static boolean verify(CharSequence rawPassword, String encodedPassword) {
+        // decode the hash
         Argon2Hash argon2Hash = Argon2EncodingUtils.decode(encodedPassword);
 
-        Argon2Function instance = Argon2Function.getInstance(argon2Hash.getMemory(), argon2Hash.getIterations(), argon2Hash.getParallelism(), argon2Hash.getHashLength(), argon2Hash.getType(), argon2Hash.getVersion());
+        // create a new instance of the hashing function
+        Argon2HashingFunction instance = new Argon2HashingFunction(
+                argon2Hash.getHashLength(),
+                argon2Hash.getParallelism(),
+                argon2Hash.getMemory(),
+                argon2Hash.getIterations(),
+                argon2Hash.getType(),
+                argon2Hash.getVersion()
+        );
 
-        return Password
-                .check(rawPassword, encodedPassword)
-                .with(instance);
+        // hash the raw password with the salt from the encoded password
+        Argon2Hash hash = instance.hash(rawPassword.toString(), argon2Hash.getSalt());
+
+        // compare the hashes
+        return hash.equals(argon2Hash);
     }
 }

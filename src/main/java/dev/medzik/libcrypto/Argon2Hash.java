@@ -1,7 +1,9 @@
 package dev.medzik.libcrypto;
 
-import com.password4j.types.Argon2;
 import org.apache.commons.codec.binary.Hex;
+import org.bouncycastle.crypto.params.Argon2Parameters;
+
+import java.util.Objects;
 
 /**
  * Represents an Argon2 hash with its parameters.
@@ -10,7 +12,7 @@ public class Argon2Hash {
     /**
      * The Argon2 type of this hash. (Argon2d, Argon2i, Argon2id)
      */
-    private final Argon2 type;
+    private final Argon2Type type;
     /**
      * The version of this hash.
      */
@@ -37,10 +39,16 @@ public class Argon2Hash {
     private final byte[] hash;
 
     /**
-     * Creates a new Argon2 hash with the given hash and parameters.
-     * @param hash The Hash object
+     * Creates a new Argon2Hash with the given parameters.
+     * @param type The Argon2 type
+     * @param version The version of argon2
+     * @param memory The memory parameter
+     * @param iterations The iterations parameter
+     * @param parallelism The parallelism parameter
+     * @param salt The salt as a byte array
+     * @param hash The hash as a byte array
      */
-    public Argon2Hash(Argon2 type, int version, int memory, int iterations, int parallelism, byte[] salt, byte[] hash) {
+    public Argon2Hash(Argon2Type type, int version, int memory, int iterations, int parallelism, byte[] salt, byte[] hash) {
         this.type = type;
         this.version = version;
         this.memory = memory;
@@ -51,10 +59,27 @@ public class Argon2Hash {
     }
 
     /**
+     * Creates a new Argon2Hash with the given hash and parameters.
+     * @param hash The hash as a byte array
+     * @param parameters The parameters of the hash
+     */
+    public Argon2Hash(byte[] hash, Argon2Parameters parameters) {
+        this.hash = hash;
+
+        // from Argon2Parameters
+        this.type = Argon2Type.fromOrdinal(parameters.getType());
+        this.version = parameters.getVersion();
+        this.memory = parameters.getMemory();
+        this.iterations = parameters.getIterations();
+        this.parallelism = parameters.getLanes();
+        this.salt = parameters.getSalt();
+    }
+
+    /**
      * Returns the Argon2 type of this hash.
      * @return The Argon2 type
      */
-    public Argon2 getType() {
+    public Argon2Type getType() {
         return type;
     }
 
@@ -128,6 +153,23 @@ public class Argon2Hash {
      */
     @Override
     public String toString() {
+        return toArgon2Hash();
+    }
+
+    /**
+     * Returns the argon2 hash
+     * @return The argon2 hash
+     */
+    public String toArgon2Hash() {
         return Argon2EncodingUtils.encode(this);
+    }
+
+    /**
+     * Compares this hash to the given hash.
+     * @param hash The hash to compare to
+     * @return Whether the hashes are equal
+     */
+    public boolean equals(Argon2Hash hash) {
+        return toArgon2Hash().equals(hash.toArgon2Hash());
     }
 }

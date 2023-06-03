@@ -19,7 +19,7 @@
     </developers>
 
     <scm>
-        <url>https://github.com/MedzikUser/libcrypto-java</url>
+        <url>https://github.com/M3DZIK/libcrypto-java</url>
     </scm>
 
     <properties>
@@ -43,11 +43,11 @@
             <version>1.15</version>
         </dependency>
 
-        <!-- Argon2 algorithm implementation -->
+        <!-- Crypto -->
         <dependency>
-            <groupId>com.password4j</groupId>
-            <artifactId>password4j</artifactId>
-            <version>1.7.0</version>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.70</version>
         </dependency>
 
         <!-- Tests -->
