@@ -56,16 +56,16 @@ public class Argon2EncodingUtils {
         }
 
         int currentPart = 1;
-        Argon2 type;
+        Argon2Type type;
         switch (parts[currentPart++]) {
             case "argon2d":
-                type = Argon2.D;
+                type = Argon2Type.D;
                 break;
             case "argon2i":
-                type = Argon2.I;
+                type = Argon2Type.I;
                 break;
             case "argon2id":
-                type = Argon2.ID;
+                type = Argon2Type.ID;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid algorithm type: " + parts[0]);

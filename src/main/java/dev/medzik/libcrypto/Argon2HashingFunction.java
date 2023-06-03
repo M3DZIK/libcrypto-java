@@ -8,40 +8,66 @@ import com.password4j.Password;
  * A hashing function for Argon2.
  */
 public class Argon2HashingFunction {
-    /**
-     * The length of the hash in bytes.
-     * <p>
-     * e.g. 32 for 256-bit hash. (256 / 8) (Use it for AES encryption)
-     */
     private final int hashLength;
-    /**
-     * The number of parallel threads to use when hashing.
-     */
     private final int parallelism;
-    /**
-     * The amount of memory to use when hashing, in KiB.
-     * <p>
-     * e.g. 65536 for 64 MiB.
-     */
     private final int memory;
-    /**
-     * The number of iterations to use when hashing.
-     */
     private final int iterations;
-    /**
-     * The type of Argon2 to use.
-     */
     private final Argon2Type type;
-    /**
-     * The version of Argon2 to use.
-     * Default is 19
-     */
     private final int version;
 
-    /**
-     * The default version of Argon2 to use.
-     */
     private static final int DEFAULT_VERSION = 19;
+
+    public static class Builder {
+        private int hashLength;
+        private int parallelism;
+        private int memory;
+        private int iterations;
+        private Argon2Type type;
+        private int version;
+
+        public Builder() {
+            this.hashLength = 32;
+            this.parallelism = 1;
+            this.memory = 65536;
+            this.iterations = 3;
+            this.type = Argon2Type.ID;
+            this.version = DEFAULT_VERSION;
+        }
+
+        public Builder setHashLength(int hashLength) {
+            this.hashLength = hashLength;
+            return this;
+        }
+
+        public Builder setParallelism(int parallelism) {
+            this.parallelism = parallelism;
+            return this;
+        }
+
+        public Builder setMemory(int memory) {
+            this.memory = memory;
+            return this;
+        }
+
+        public Builder setIterations(int iterations) {
+            this.iterations = iterations;
+            return this;
+        }
+
+        public Builder setType(Argon2Type type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder setVersion(int version) {
+            this.version = version;
+            return this;
+        }
+
+        public Argon2HashingFunction build() {
+            return new Argon2HashingFunction(hashLength, parallelism, memory, iterations, type, version);
+        }
+    }
 
     /**
      * Creates a new instance.
@@ -90,6 +116,16 @@ public class Argon2HashingFunction {
                 .with(instance);
 
         return Argon2EncodingUtils.decode(hash.getResult());
+    }
+
+    /**
+     * Hashes a password using Argon2id.
+     * @param password The password to hash
+     * @param salt The salt to use
+     * @return The hashed password
+     */
+    public Argon2Hash hash(String password, String salt) {
+       return hash(password, salt.getBytes());
     }
 
     /**

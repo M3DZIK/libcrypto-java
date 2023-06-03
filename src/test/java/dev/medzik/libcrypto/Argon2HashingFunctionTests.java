@@ -48,4 +48,24 @@ public class Argon2HashingFunctionTests {
 
         assertTrue(Argon2HashingFunction.verify("medzik@duck.com", hash));
     }
+
+    @Test
+    void hashUsingBuilder() {
+        Argon2HashingFunction.Builder builder = new Argon2HashingFunction.Builder()
+                .setHashLength(32)
+                .setParallelism(1)
+                .setMemory(65536)
+                .setIterations(2)
+                .setType(Argon2Type.ID)
+                .setVersion(19);
+
+        Argon2HashingFunction argon2 = builder.build();
+
+        Argon2Hash hash = argon2.hash("password", "some salt");
+
+        assertEquals(32, hash.getHash().length);
+        assertEquals(1, hash.getParallelism());
+        assertEquals(65536, hash.getMemory());
+        assertEquals(2, hash.getIterations());
+    }
 }
