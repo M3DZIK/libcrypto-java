@@ -50,8 +50,8 @@ public class AesCbc {
 
     /**
      * Decrypts the given cipher text using AES-CBC with the given key.
-     * @param key The key to use for decryption. (must be 256-bit/32-byte)
      * @param cipherText The cipher text to decrypt.
+     * @param key The key to use for decryption. (must be 256-bit/32-byte)
      * @return The clear text.
      * @throws EncryptException If the decryption fails.
      */
