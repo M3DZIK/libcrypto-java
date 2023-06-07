@@ -4,16 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class Argon2HashingFunctionTests {
+public class Argon2Tests {
     @Test
     void hash() {
-        Argon2HashingFunction argon2 = new Argon2HashingFunction(32, 1, 65536, 1);
+        Argon2 argon2 = new Argon2(32, 1, 65536, 1);
 
         Argon2Hash hash = argon2.hash("secret password", Salt.generate(16));
 
-        assertTrue(Argon2HashingFunction.verify("secret password", hash.toString()));
+        assertTrue(Argon2.verify("secret password", hash.toString()));
         // invalid password
-        assertFalse(Argon2HashingFunction.verify("invalid password", hash.toString()));
+        assertFalse(Argon2.verify("invalid password", hash.toString()));
     }
 
     @Test
@@ -21,10 +21,10 @@ public class Argon2HashingFunctionTests {
         String password = "secret password";
         byte[] salt = Salt.generate(16);
 
-        Argon2HashingFunction argon2 = new Argon2HashingFunction(32, 1, 65536, 1);
+        Argon2 argon2 = new Argon2(32, 1, 65536, 1);
         Argon2Hash hash = argon2.hash(password, salt);
 
-        Argon2HashingFunction argon2_2 = new Argon2HashingFunction(32, 1, 65536, 1);
+        Argon2 argon2_2 = new Argon2(32, 1, 65536, 1);
         Argon2Hash hash_2 = argon2_2.hash(password, salt);
 
         assertEquals(hash.toString(), hash_2.toString());
@@ -32,7 +32,7 @@ public class Argon2HashingFunctionTests {
 
     @Test
     void toHexHash() {
-        Argon2HashingFunction argon2 = new Argon2HashingFunction(16, 1, 65536, 1);
+        Argon2 argon2 = new Argon2(16, 1, 65536, 1);
         Argon2Hash hash = argon2.hash("secret password", Salt.generate(16));
 
         String hexHash = hash.toHexHash();
@@ -44,12 +44,12 @@ public class Argon2HashingFunctionTests {
     void validHash() {
         String hash = "$argon2id$v=19$m=15360,t=2,p=1$bWVkemlrQGR1Y2suY29t$n7wCfzdczbjclMnpvw+t/4D+mCcCFUU+hm6Z85k81PQ";
 
-        assertTrue(Argon2HashingFunction.verify("medzik@duck.com", hash));
+        assertTrue(Argon2.verify("medzik@duck.com", hash));
     }
 
     @Test
     void hashUsingBuilder() {
-        Argon2HashingFunction.Builder builder = new Argon2HashingFunction.Builder()
+        Argon2.Builder builder = new Argon2.Builder()
                 .setHashLength(32)
                 .setParallelism(1)
                 .setMemory(65536)
@@ -57,7 +57,7 @@ public class Argon2HashingFunctionTests {
                 .setType(Argon2Type.ID)
                 .setVersion(19);
 
-        Argon2HashingFunction argon2 = builder.build();
+        Argon2 argon2 = builder.build();
 
         Argon2Hash hash = argon2.hash("password", "some salt");
 

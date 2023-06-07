@@ -5,10 +5,10 @@ import com.password4j.Hash;
 import com.password4j.Password;
 
 /**
- * A hashing function for Argon2.
+ * Argon2 hashing.
  * <a href="https://en.wikipedia.org/wiki/Argon2">See Argon2 on Wikipedia</a>
  */
-public class Argon2HashingFunction {
+public class Argon2 {
     private final int hashLength;
     private final int parallelism;
     private final int memory;
@@ -65,8 +65,8 @@ public class Argon2HashingFunction {
             return this;
         }
 
-        public Argon2HashingFunction build() {
-            return new Argon2HashingFunction(hashLength, parallelism, memory, iterations, type, version);
+        public Argon2 build() {
+            return new Argon2(hashLength, parallelism, memory, iterations, type, version);
         }
     }
 
@@ -77,7 +77,7 @@ public class Argon2HashingFunction {
      * @param memory amount of memory to use when hashing, in KiB
      * @param iterations number of iterations to use when hashing
      */
-    public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations, Argon2Type type, int version) {
+    public Argon2(int hashLength, int parallelism, int memory, int iterations, Argon2Type type, int version) {
         this.hashLength = hashLength;
         this.parallelism = parallelism;
         this.memory = memory;
@@ -93,7 +93,7 @@ public class Argon2HashingFunction {
      * @param memory amount of memory to use when hashing, in KiB
      * @param iterations number of iterations to use when hashing
      */
-    public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations) {
+    public Argon2(int hashLength, int parallelism, int memory, int iterations) {
         this.hashLength = hashLength;
         this.parallelism = parallelism;
         this.memory = memory;
