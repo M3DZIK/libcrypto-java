@@ -20,7 +20,7 @@ The library is available on Maven Central. To use it, add the following to your 
 
 Hash passwords using Argon2 (recommended)
 
-![Screenshot with an example argon2 hashing code](https://user-images.githubusercontent.com/87065584/236322588-57e81583-ae23-439b-ab0d-d196f926fc5b.png)
+![Screenshot with an example argon2 hashing code](https://github.com/M3DZIK/libcrypto-java/assets/87065584/4a125e5e-4950-456a-a89e-cca56d4f8868)
 
 Or use PBKDF2
 
@@ -30,7 +30,7 @@ Or use PBKDF2
 
 Encrypt data using AES CBC
 
-![Screenshot with an example code of AES CBC](https://user-images.githubusercontent.com/87065584/236325358-8982b9c6-cea5-4cb6-a4e2-b81b4e51c163.png)
+![Screenshot with an example code of AES CBC](https://github.com/M3DZIK/libcrypto-java/assets/87065584/9b645be4-c30a-4bd6-a7f9-03ae7468536f)
 
 Encrypt data using RSA
 
