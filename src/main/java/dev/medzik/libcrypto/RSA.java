@@ -15,8 +15,8 @@ public class RSA {
 
     /**
      * Generates a new RSA key pair.
-     * @param keySize The key size in bits.
-     * @return The generated key pair.
+     * @param keySize key size in bits
+     * @return Generated key pair.
      * @throws EncryptException If the key pair generation fails.
      */
     public static KeyPair generateKeyPair(int keySize) throws EncryptException {
@@ -31,9 +31,9 @@ public class RSA {
 
     /**
      * Encrypts the given clear text using RSA with the given public key.
-     * @param clearText The clear text to encrypt.
-     * @param publicKey The public key to use for encryption.
-     * @return The cipher text as hex string.
+     * @param clearText clear text to encrypt
+     * @param publicKey public key to use for encryption
+     * @return Cipher text as base64 string.
      * @throws EncryptException If the encryption fails.
      */
     public static String encrypt(String clearText, PublicKey publicKey) throws EncryptException {
@@ -54,9 +54,9 @@ public class RSA {
 
     /**
      * Decrypts the given cipher text using RSA with the given private key.
-     * @param cipherText The cipher text to decrypt.
-     * @param privateKey The private key to use for decryption.
-     * @return The clear text.
+     * @param cipherText cipher text to decrypt
+     * @param privateKey private key to use for decryption
+     * @return Clear text as string. (UTF-8)
      * @throws EncryptException If the decryption fails.
      */
     public static String decrypt(String cipherText, PrivateKey privateKey) throws EncryptException {
@@ -75,14 +75,11 @@ public class RSA {
         }
     }
 
-    /**
-     * RSA key utils.
-     */
     public static class KeyUtils {
         /**
          * Get openssl compatible public key string.
-         * @param publicKey The public key.
-         * @return The public key string. (openssl compatible)
+         * @param publicKey public key
+         * @return Public key string. (openssl compatible)
          */
         public static String getPublicKeyString(PublicKey publicKey) {
             // encode to base64 and add new lines every 64 characters according to openssl format
@@ -94,8 +91,8 @@ public class RSA {
 
         /**
          * Get openssl compatible private key string.
-         * @param privateKey The private key.
-         * @return The private key string. (openssl compatible) (PKCS8)
+         * @param privateKey private key
+         * @return Private key string. (openssl compatible) (PKCS8)
          */
         public static String getPrivateKeyString(PrivateKey privateKey) {
             // encode to base64 and add new lines every 64 characters according to openssl format
@@ -107,8 +104,8 @@ public class RSA {
 
         /**
          * Get public key from byte array. (X509)
-         * @param publicKey The public key byte array.
-         * @return The public key.
+         * @param publicKey public key byte array
+         * @return Public key.
          * @throws EncryptException If the public key is invalid.
          */
         public static PublicKey getPublicKey(byte[] publicKey) throws EncryptException {
@@ -123,8 +120,8 @@ public class RSA {
 
         /**
          * Get public key from string. (X509)
-         * @param publicKey The public key string.
-         * @return The public key.
+         * @param publicKey public key string
+         * @return Public key.
          * @throws EncryptException If the public key is invalid.
          */
         public static PublicKey getPublicKey(String publicKey) throws EncryptException {
@@ -143,8 +140,8 @@ public class RSA {
 
         /**
          * Get private key from byte array. (PKCS8)
-         * @param privateKey The private key byte array.
-         * @return The private key.
+         * @param privateKey private key byte array
+         * @return Private key.
          * @throws EncryptException If the private key is invalid.
          */
         public static PrivateKey getPrivateKey(byte[] privateKey) throws EncryptException {
@@ -159,8 +156,8 @@ public class RSA {
 
         /**
          * Get private key from string. (PKCS8)
-         * @param privateKey The private key string.
-         * @return The private key.
+         * @param privateKey private key string
+         * @return Private key.
          * @throws EncryptException If the private key is invalid.
          */
         public static PrivateKey getPrivateKey(String privateKey) throws EncryptException {
@@ -181,8 +178,8 @@ public class RSA {
 
         /**
          * Add new line every 64 characters. (according to openssl format)
-         * @param string The string.
-         * @return The string with new lines every 64 characters.
+         * @param string string to add new lines
+         * @return String with new lines every 64 characters.
          */
         private static String newLineEvery64Characters(String string) {
             StringBuilder stringBuilder = new StringBuilder();

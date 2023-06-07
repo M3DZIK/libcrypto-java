@@ -11,9 +11,6 @@ import javax.crypto.spec.PBEKeySpec;
  * <a href="https://en.wikipedia.org/wiki/PBKDF2">See PBKDF2 on Wikipedia</a>
  */
 public class Pbkdf2 {
-    /**
-     * Number of iterations for the hashing.
-     */
     int iterations;
 
     public Pbkdf2(int passwordIterations) {
@@ -21,9 +18,9 @@ public class Pbkdf2 {
     }
 
     /**
-     * Compute a PBKDF2-SHA256 hash
-     * @param password Input password to be hashed.
-     * @param salt The password salt.
+     * Compute a PBKDF2-SHA256 hash.
+     * @param password password to hash
+     * @param salt salt to use
      * @return 256-bit password hash encoded as hex string.
      * @throws EncryptException If the hashing fails.
      */
@@ -32,9 +29,9 @@ public class Pbkdf2 {
     }
 
     /**
-     * Compute a PBKDF2-SHA512 hash
-     * @param password Input password to be hashed.
-     * @param salt The password salt.
+     * Compute a PBKDF2-SHA512 hash.
+     * @param password password to hash
+     * @param salt salt to use
      * @return 512-bit password hash encoded as hex string.
      * @throws EncryptException If the hashing fails.
      */

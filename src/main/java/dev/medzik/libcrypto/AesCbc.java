@@ -14,9 +14,9 @@ public class AesCbc {
 
     /**
      * Encrypts the given clear text using AES-CBC with the given key and random IV.
-     * @param clearText The clear text to encrypt.
-     * @param key The key to use for encryption. (must be 256-bit/32-byte)
-     * @return The cipher text as hex string.
+     * @param clearText clear text to encrypt
+     * @param key secret key to use for encryption. (hex encoded)
+     * @return Cipher text as hex string.
      * @throws EncryptException If the encryption fails.
      */
     public static String encrypt(String clearText, String key) throws EncryptException {
@@ -50,9 +50,9 @@ public class AesCbc {
 
     /**
      * Decrypts the given cipher text using AES-CBC with the given key.
-     * @param cipherText The cipher text to decrypt.
-     * @param key The key to use for decryption. (must be 256-bit/32-byte)
-     * @return The clear text.
+     * @param cipherText cipher text to decrypt (hex encoded)
+     * @param key secret key to use for decryption. (hex encoded)
+     * @return Clear text as string. (UTF-8)
      * @throws EncryptException If the decryption fails.
      */
     public static String decrypt(String cipherText, String key) throws EncryptException {

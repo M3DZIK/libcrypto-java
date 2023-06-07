@@ -11,8 +11,6 @@ public class Argon2HashingFunctionTests {
 
         Argon2Hash hash = argon2.hash("secret password", Salt.generate(16));
 
-        System.out.println(hash);
-
         assertTrue(Argon2HashingFunction.verify("secret password", hash.toString()));
         // invalid password
         assertFalse(Argon2HashingFunction.verify("invalid password", hash.toString()));

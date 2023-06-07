@@ -11,11 +11,10 @@ public class Argon2EncodingUtils {
 
     /**
      * Encodes the given hash and parameters to a string.
-     * @param hash The hash to encode
-     * @return Argon2 encoded hash
-     * @throws IllegalArgumentException If the parameters contain invalid values
+     * @param hash hash to encode
+     * @return Encoded hash in argon2 format.
      */
-    public static String encode(Argon2Hash hash) throws IllegalArgumentException {
+    public static String encode(Argon2Hash hash) {
         StringBuilder stringBuilder = new StringBuilder();
 
         switch (hash.getType()) {
@@ -43,11 +42,10 @@ public class Argon2EncodingUtils {
 
     /**
      * Decodes the given Argon2 encoded hash to a {@link Argon2Hash} object.
-     * @param encodedHash The encoded argon2 hash
-     * @return The decoded hash
-     * @throws IllegalArgumentException If the encoded hash is invalid
+     * @param encodedHash encoded hash in argon2 format
+     * @return Decoded hash.
      */
-    public static Argon2Hash decode(String encodedHash) throws IllegalArgumentException {
+    public static Argon2Hash decode(String encodedHash) {
         String[] parts = encodedHash.split("\\$");
         if (parts.length < 4) {
             throw new IllegalArgumentException("Invalid encoded Argon2-hash");

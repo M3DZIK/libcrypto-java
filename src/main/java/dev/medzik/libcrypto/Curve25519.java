@@ -6,6 +6,7 @@ import org.apache.commons.codec.binary.Hex;
 /**
  * Curve25519 implementation. This class is a wrapper around the WhisperSystems Curve25519 implementation
  * with a Hex encoding/decoding layer.
+ * <a href="https://en.wikipedia.org/wiki/Curve25519">See Curve25519 on Wikipedia</a>
  */
 public class Curve25519 {
     private static final org.whispersystems.curve25519.Curve25519 curve25519 = org.whispersystems.curve25519.Curve25519.getInstance(org.whispersystems.curve25519.Curve25519.JAVA);

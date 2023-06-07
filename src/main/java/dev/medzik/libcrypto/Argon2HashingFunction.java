@@ -6,6 +6,7 @@ import com.password4j.Password;
 
 /**
  * A hashing function for Argon2.
+ * <a href="https://en.wikipedia.org/wiki/Argon2">See Argon2 on Wikipedia</a>
  */
 public class Argon2HashingFunction {
     private final int hashLength;
@@ -71,10 +72,10 @@ public class Argon2HashingFunction {
 
     /**
      * Creates a new instance.
-     * @param hashLength The length of the hash in bytes
-     * @param parallelism The number of parallel threads to use when hashing
-     * @param memory The amount of memory to use when hashing, in KiB
-     * @param iterations The number of iterations to use when hashing
+     * @param hashLength length of the hash in bytes
+     * @param parallelism number of parallel threads to use when hashing
+     * @param memory amount of memory to use when hashing, in KiB
+     * @param iterations number of iterations to use when hashing
      */
     public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations, Argon2Type type, int version) {
         this.hashLength = hashLength;
@@ -87,10 +88,10 @@ public class Argon2HashingFunction {
 
     /**
      * Creates a new instance.
-     * @param hashLength The length of the hash in bytes
-     * @param parallelism The number of parallel threads to use when hashing
-     * @param memory The amount of memory to use when hashing, in KiB
-     * @param iterations The number of iterations to use when hashing
+     * @param hashLength length of the hash in bytes
+     * @param parallelism number of parallel threads to use when hashing
+     * @param memory amount of memory to use when hashing, in KiB
+     * @param iterations number of iterations to use when hashing
      */
     public Argon2HashingFunction(int hashLength, int parallelism, int memory, int iterations) {
         this.hashLength = hashLength;
@@ -102,27 +103,37 @@ public class Argon2HashingFunction {
     }
 
     /**
-     * Hashes a password using Argon2id.
-     * @param password The password to hash
-     * @param salt The salt to use
-     * @return The hashed password
+     * Hashes a password using argon2.
+     * @param password password to hash
+     * @param salt salt to use
+     * @return Hashed password.
      */
     public Argon2Hash hash(String password, byte[] salt) {
-        Argon2Function instance = Argon2Function.getInstance(memory, iterations, parallelism, hashLength, type.toPassword4jType(), version);
+        // create an instance of Argon2Function from password4j with the parameters
+        Argon2Function instance = Argon2Function.getInstance(
+                memory,
+                iterations,
+                parallelism,
+                hashLength,
+                type.toPassword4jType(),
+                version
+        );
 
+        // compute the hash
         Hash hash = Password
                 .hash(password)
                 .addSalt(salt)
                 .with(instance);
 
+        // return the hash
         return Argon2EncodingUtils.decode(hash.getResult());
     }
 
     /**
-     * Hashes a password using Argon2id.
-     * @param password The password to hash
-     * @param salt The salt to use
-     * @return The hashed password
+     * Hashes a password using argon.
+     * @param password password to hash
+     * @param salt salt to use
+     * @return Hashed password.
      */
     public Argon2Hash hash(String password, String salt) {
        return hash(password, salt.getBytes());
@@ -130,15 +141,25 @@ public class Argon2HashingFunction {
 
     /**
      * Verifies a password against a hash.
-     * @param rawPassword The raw password to verify
-     * @param encodedPassword The encoded password to verify against
+     * @param rawPassword raw password to verify
+     * @param encodedPassword encoded password to verify against
      * @return True if the passwords match, false otherwise
      */
     public static boolean verify(CharSequence rawPassword, String encodedPassword) {
+        // decode the `encodedPassword` to get the parameters
         Argon2Hash argon2Hash = Argon2EncodingUtils.decode(encodedPassword);
 
-        Argon2Function instance = Argon2Function.getInstance(argon2Hash.getMemory(), argon2Hash.getIterations(), argon2Hash.getParallelism(), argon2Hash.getHashLength(), argon2Hash.getType().toPassword4jType(), argon2Hash.getVersion());
+        // create an instance of Argon2Function with the parameters
+        Argon2Function instance = Argon2Function.getInstance(
+                argon2Hash.getMemory(),
+                argon2Hash.getIterations(),
+                argon2Hash.getParallelism(),
+                argon2Hash.getHashLength(),
+                argon2Hash.getType().toPassword4jType(),
+                argon2Hash.getVersion()
+        );
 
+        // verify the password
         return Password
                 .check(rawPassword, encodedPassword)
                 .with(instance);
