@@ -10,7 +10,7 @@ The library is available on Maven Central. To use it, add the following to your 
 <dependency>
     <groupId>dev.medzik</groupId>
     <artifactId>libcrypto</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
 </dependency>
 ```
 
@@ -35,3 +35,7 @@ Encrypt data using AES CBC
 Encrypt data using RSA
 
 ![Screenshot with an example code of RSA](https://user-images.githubusercontent.com/87065584/236550078-562027d9-655b-47c8-8ae5-3f4e9c1067af.png)
+
+Encrypt data between two users using Curve25519
+
+![Screenshot with an example code of Curve25519](https://github.com/M3DZIK/libcrypto-java/assets/87065584/842941d1-ffc7-4ccd-90c4-aa3857679d5d)
