@@ -14,12 +14,12 @@ public class AesCbc {
 
     /**
      * Encrypts the given clear text using AES-CBC with the given key and random IV.
-     * @param clearText clear text to encrypt
-     * @param key secret key to use for encryption. (hex encoded)
+     * @param key secret key to use for encryption (hex encoded)
+     * @param clearText clear text to encrypt (UTF-8)
      * @return Cipher text as hex string.
      * @throws EncryptException If the encryption fails.
      */
-    public static String encrypt(String clearText, String key) throws EncryptException {
+    public static String encrypt(String key, String clearText) throws EncryptException {
         try {
             // covert key to byte array
             byte[] keyByte = Hex.decodeHex(key);
@@ -50,12 +50,12 @@ public class AesCbc {
 
     /**
      * Decrypts the given cipher text using AES-CBC with the given key.
+     * @param key secret key to use for decryption (hex encoded)
      * @param cipherText cipher text to decrypt (hex encoded)
-     * @param key secret key to use for decryption. (hex encoded)
      * @return Clear text as string. (UTF-8)
      * @throws EncryptException If the decryption fails.
      */
-    public static String decrypt(String cipherText, String key) throws EncryptException {
+    public static String decrypt(String key, String cipherText) throws EncryptException {
         try {
             // covert key to byte array
             byte[] keyBytes = Hex.decodeHex(key);
