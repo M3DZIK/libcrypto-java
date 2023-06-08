@@ -34,14 +34,14 @@ public class Curve25519Tests {
 
         String sharedSecret = Curve25519.calculateAgreement(ourPrivate, theirPublic);
 
-        String cipherText = AesCbc.encrypt(sharedSecret, "Hello, world!");
+        String cipherText = AES.encrypt(AES.GCM, sharedSecret, "Hello, world!");
 
         String theirPrivate = keyPair.getPrivateKey();
         String outPublic = keyPair.getPublicKey();
 
         String sharedSecretTwo = Curve25519.calculateAgreement(theirPrivate, outPublic);
 
-        String plainText = AesCbc.decrypt(sharedSecretTwo, cipherText);
+        String plainText = AES.decrypt(AES.GCM, sharedSecretTwo, cipherText);
 
         assert plainText.equals("Hello, world!");
     }

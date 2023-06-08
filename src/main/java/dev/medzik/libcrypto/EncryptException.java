@@ -7,4 +7,8 @@ public class EncryptException extends Exception {
     public EncryptException(Throwable cause) {
         super(cause);
     }
+
+    public EncryptException(String message) {
+        super(message);
+    }
 }
