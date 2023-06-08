@@ -8,11 +8,21 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.spec.AlgorithmParameterSpec;
 
+/**
+ * AES encryption and decryption. Supports AES CBC and GCM modes.
+ * <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">See AES on Wikipedia</a>
+ */
 public class AES {
-    private static final String ALGORITHM = "AES";
-
+    /**
+     * AES CBC (Cipher Block Chaining) mode.
+     */
     public static final AesType CBC = AesType.CBC;
+    /**
+     * AES GCM (Galois/Counter Mode) mode.
+     */
     public static final AesType GCM = AesType.GCM;
+
+    private static final String ALGORITHM = "AES";
 
     /**
      * Encrypts the given clear text using AES with the given key and random IV.

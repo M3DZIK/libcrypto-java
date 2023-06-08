@@ -5,7 +5,7 @@ import com.password4j.Hash;
 import com.password4j.Password;
 
 /**
- * Argon2 hashing.
+ * Argon2 implementation.
  * <a href="https://en.wikipedia.org/wiki/Argon2">See Argon2 on Wikipedia</a>
  */
 public class Argon2 {
