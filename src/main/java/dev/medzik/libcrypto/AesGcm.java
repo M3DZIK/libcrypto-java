@@ -3,15 +3,16 @@ package dev.medzik.libcrypto;
 import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Cipher;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
  * AES CBC encryption/decryption with PKCS5 padding and hex encoding.
  */
-public class AesCbc {
+public class AesGcm {
     private static final String ALGORITHM = "AES";
-    private static final String MODE = "AES/CBC/PKCS5Padding";
+    private static final String MODE = "AES/GCM/NoPadding";
 
     /**
      * Encrypts the given clear text using AES-CBC with the given key and random IV.
@@ -26,10 +27,10 @@ public class AesCbc {
             byte[] keyBytes = Hex.decodeHex(key);
 
             // generate random IV
-            byte[] iv = Salt.generate(16);
+            byte[] iv = Salt.generate(12);
 
             SecretKeySpec secretKey = new SecretKeySpec(keyBytes, ALGORITHM);
-            IvParameterSpec parameterSpec = new IvParameterSpec(iv);
+            GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
 
             // initialize cipher
             Cipher cipher = Cipher.getInstance(MODE);
@@ -58,11 +59,11 @@ public class AesCbc {
             byte[] keyBytes = Hex.decodeHex(key);
 
             // extract IV and Cipher Text from hex string
-            byte[] iv = Hex.decodeHex(cipherText.substring(0, 32));
-            byte[] cipherBytes = Hex.decodeHex(cipherText.substring(32));
+            byte[] iv = Hex.decodeHex(cipherText.substring(0, 24));
+            byte[] cipherBytes = Hex.decodeHex(cipherText.substring(24));
 
             SecretKeySpec secretKey = new SecretKeySpec(keyBytes, ALGORITHM);
-            IvParameterSpec parameterSpec = new IvParameterSpec(iv);
+            GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
 
             // initialize cipher
             Cipher cipher = Cipher.getInstance(MODE);
