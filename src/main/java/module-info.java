@@ -5,8 +5,8 @@ module dev.medzik.libcrypto {
     // Password4j (used for argon2 implementation)
     requires password4j;
 
-    // Curve25519 implementation
-    requires curve25519.java;
+    // Google Tink (used for Curve25519 implementation)
+    requires com.google.crypto.tink;
 
     exports dev.medzik.libcrypto;
 }
