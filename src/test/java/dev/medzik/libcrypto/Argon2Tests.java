@@ -49,15 +49,14 @@ public class Argon2Tests {
 
     @Test
     void hashUsingBuilder() {
-        Argon2.Builder builder = new Argon2.Builder()
+        Argon2 argon2 = new Argon2.Builder()
+                .setType(Argon2Type.ID)
                 .setHashLength(32)
                 .setParallelism(1)
                 .setMemory(65536)
                 .setIterations(2)
-                .setType(Argon2Type.ID)
-                .setVersion(19);
-
-        Argon2 argon2 = builder.build();
+                .setVersion(19)
+                .build();
 
         Argon2Hash hash = argon2.hash("password", "some salt");
 
