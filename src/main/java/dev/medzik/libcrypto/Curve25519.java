@@ -27,7 +27,7 @@ public class Curve25519 {
         byte[] privateKeyBytes = Hex.decodeHex(privateKey);
         byte[] publicKeyBytes = X25519.publicFromPrivate(privateKeyBytes);
 
-        return new Curve25519KeyPair(publicKeyBytes, publicKeyBytes);
+        return new Curve25519KeyPair(publicKeyBytes, privateKeyBytes);
     }
 
     /**
