@@ -1,21 +1,22 @@
 package dev.medzik.libcrypto;
 
-import com.google.crypto.tink.subtle.X25519;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-import java.security.InvalidKeyException;
+import java.security.InvalidParameterException;
 
 /**
- * Curve25519 implementation using Google Tink.
+ * Curve25519 implementation.
  */
 public class Curve25519 {
     /**
      * Generate a new X25519 key pair.
      * @return X25519 key pair.
      */
-    public static Curve25519KeyPair generateKeyPair() throws InvalidKeyException, DecoderException {
-        byte[] privateKey = X25519.generatePrivateKey();
-        return fromPrivateKey(Hex.encodeHexString(privateKey));
+    public static Curve25519KeyPair generateKeyPair() {
+        byte[] privateKey = com.github.netricecake.ecdh.Curve25519.generateRandomKey();
+        byte[] publicKey = com.github.netricecake.ecdh.Curve25519.publicKey(privateKey);
+
+        return new Curve25519KeyPair(publicKey, privateKey);
     }
 
     /**
@@ -23,9 +24,9 @@ public class Curve25519 {
      * @param privateKey private key to recover (hex encoded)
      * @return X25519 key pair.
      */
-    public static Curve25519KeyPair fromPrivateKey(String privateKey) throws DecoderException, InvalidKeyException {
+    public static Curve25519KeyPair fromPrivateKey(String privateKey) throws DecoderException, InvalidParameterException {
         byte[] privateKeyBytes = Hex.decodeHex(privateKey);
-        byte[] publicKeyBytes = X25519.publicFromPrivate(privateKeyBytes);
+        byte[] publicKeyBytes = com.github.netricecake.ecdh.Curve25519.publicKey(privateKeyBytes);
 
         return new Curve25519KeyPair(publicKeyBytes, privateKeyBytes);
     }
@@ -36,11 +37,11 @@ public class Curve25519 {
      * @param theirPublic their public key
      * @return Shared secret.
      */
-    public static String computeSharedSecret(String ourPrivate, String theirPublic) throws DecoderException, InvalidKeyException {
+    public static String computeSharedSecret(String ourPrivate, String theirPublic) throws DecoderException {
         byte[] outPrivateBytes = Hex.decodeHex(ourPrivate);
         byte[] theirPublicBytes = Hex.decodeHex(theirPublic);
 
-        byte[] sharedSecret = X25519.computeSharedSecret(outPrivateBytes, theirPublicBytes);
+        byte[] sharedSecret = com.github.netricecake.ecdh.Curve25519.sharedSecret(outPrivateBytes, theirPublicBytes);
 
         return Hex.encodeHexString(sharedSecret);
     }

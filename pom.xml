@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>LibCrypto is a set of cryptography utilities</name>
+    <name>Cryptography utilities</name>
     <groupId>dev.medzik</groupId>
     <artifactId>libcrypto</artifactId>
     <version>0.5.2</version>
-    <description>Cryptography Utils for Java</description>
+    <description>Cryptographic utilities: AES-CBC, AES-GCM, Argon2, Curve25519, Pbkdf2, RSA.</description>
     <url>https://github.com/M3DZIK/libcrypto-java</url>
 
     <developers>
@@ -50,11 +50,11 @@
             <version>1.7.1</version>
         </dependency>
 
-        <!-- Google tink -->
+        <!-- Curve25519 algorithm implementation -->
         <dependency>
-            <groupId>com.google.crypto.tink</groupId>
-            <artifactId>tink</artifactId>
-            <version>1.9.0</version>
+            <groupId>com.github.netricecake</groupId>
+            <artifactId>x25519</artifactId>
+            <version>2.0</version>
         </dependency>
 
         <!-- Tests -->
