@@ -7,7 +7,7 @@
     <name>Cryptography utilities</name>
     <groupId>dev.medzik</groupId>
     <artifactId>libcrypto</artifactId>
-    <version>0.5.2</version>
+    <version>0.5.3</version>
     <description>Cryptographic utilities: AES-CBC, AES-GCM, Argon2, Curve25519, Pbkdf2, RSA.</description>
     <url>https://github.com/M3DZIK/libcrypto-java</url>
 
